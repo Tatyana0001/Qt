@@ -48,6 +48,9 @@ include/divisible/*
 .idea/*.xml
 
 build/**/*
+build-Task_1-Desktop-Debug/**/*
+build-Task_2-Desktop-Debug/**/*
+build-Task_3-Desktop-Debug/**/*
 
 include/*
 lib/*
@@ -70,6 +73,9 @@ build/
 [Bb]in/
 [Oo]bj/
 .vs/
+build-Task_1-Desktop-Debug/
+build-Task_2-Desktop-Debug/
+build-Task_3-Desktop-Debug/
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/
