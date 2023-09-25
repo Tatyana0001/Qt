@@ -6,26 +6,216 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>281</width>
-    <height>116</height>
+    <width>519</width>
+    <height>360</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
-   <item>
-    <widget class="QLabel" name="label">
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="l_host">
      <property name="text">
-      <string>Поздравляю вы подключились к БД!</string>
+      <string>Имя хоста</string>
      </property>
-     <property name="textFormat">
-      <enum>Qt::RichText</enum>
+     <property name="buddy">
+      <cstring>lE_host</cstring>
      </property>
     </widget>
    </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="lE_host"/>
+   </item>
+   <item row="0" column="2">
+    <widget class="QPushButton" name="pB_clear_host">
+     <property name="text">
+      <string>Очистить</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="l_bd">
+     <property name="text">
+      <string>Имя БД</string>
+     </property>
+     <property name="buddy">
+      <cstring>lE_bd</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="lE_bd"/>
+   </item>
+   <item row="1" column="2">
+    <widget class="QPushButton" name="pB_clear_bd">
+     <property name="text">
+      <string>Очистить</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="l_login">
+     <property name="text">
+      <string>Логин</string>
+     </property>
+     <property name="buddy">
+      <cstring>lE_login</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="lE_login"/>
+   </item>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="pB_clear_login">
+     <property name="text">
+      <string>Очистить</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="l_password">
+     <property name="text">
+      <string>Пароль</string>
+     </property>
+     <property name="buddy">
+      <cstring>lE_password</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="lE_password"/>
+   </item>
+   <item row="3" column="2">
+    <widget class="QPushButton" name="pB_clear_password">
+     <property name="text">
+      <string>Очистить</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="l_port">
+     <property name="text">
+      <string>Порт подключения</string>
+     </property>
+     <property name="buddy">
+      <cstring>spinBox</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="QPushButton" name="pB_clear_port">
+     <property name="text">
+      <string>Очистить</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1" colspan="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QSpinBox" name="spinBox"/>
+   </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lE_host</tabstop>
+  <tabstop>lE_bd</tabstop>
+  <tabstop>lE_login</tabstop>
+  <tabstop>lE_password</tabstop>
+  <tabstop>spinBox</tabstop>
+  <tabstop>pB_clear_host</tabstop>
+  <tabstop>pB_clear_bd</tabstop>
+  <tabstop>pB_clear_login</tabstop>
+  <tabstop>pB_clear_password</tabstop>
+  <tabstop>pB_clear_port</tabstop>
+ </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pB_clear_host</sender>
+   <signal>clicked()</signal>
+   <receiver>lE_host</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>435</x>
+     <y>47</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>388</x>
+     <y>39</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pB_clear_bd</sender>
+   <signal>clicked()</signal>
+   <receiver>lE_bd</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>438</x>
+     <y>99</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>358</x>
+     <y>98</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pB_clear_login</sender>
+   <signal>clicked()</signal>
+   <receiver>lE_login</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>433</x>
+     <y>159</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>339</x>
+     <y>159</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pB_clear_password</sender>
+   <signal>clicked()</signal>
+   <receiver>lE_password</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>441</x>
+     <y>193</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>393</x>
+     <y>203</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pB_clear_port</sender>
+   <signal>clicked()</signal>
+   <receiver>spinBox</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>422</x>
+     <y>259</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>378</x>
+     <y>254</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
