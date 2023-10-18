@@ -3,19 +3,19 @@
 
 Stopwatch::Stopwatch(QObject* parent) : QObject(parent)
 {
-myTime = new QTimer(this);
+    myTime = new QTimer(this);
 }
 Stopwatch::~Stopwatch(){
     qDebug() << "Stopwatch clear";
 }
 
 void Stopwatch::StartTime(){
-myTime->start(100);
-started = true;
+    myTime->start(100);
+    started = true;
 }
 void Stopwatch::StopTime(){
-myTime->stop();
-started = false;
+    myTime->stop();
+    started = false;
 }
 
 void Stopwatch::Clear()
@@ -26,7 +26,7 @@ void Stopwatch::Clear()
     circle_ms = 0;
     circle_s = 0;
     circle_m = 0;
-    circle_num = 0;
+    circle_num = 1;
     emit sig_SendClearSignal();
 }
 
@@ -60,14 +60,14 @@ QString Stopwatch::TimeSlot()
     }else{
         circle_time = QString::number(circle_s) + "." + QString::number(circle_ms);
     }
-ms++;
-if(ms>=10){
-    ms = 0;
-    s++;
-}
-if(s >= 60){
-    s = 0;
-    m++;
-}
-return QString::number(m) + " : " + QString::number(s) + " . " + QString::number(ms);
+    ms++;
+    if(ms>=10){
+        ms = 0;
+        s++;
+    }
+    if(s >= 60){
+        s = 0;
+        m++;
+    }
+    return QString::number(m) + " : " + QString::number(s) + " . " + QString::number(ms);
 }

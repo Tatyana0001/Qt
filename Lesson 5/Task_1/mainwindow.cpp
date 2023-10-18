@@ -64,6 +64,6 @@ void MainWindow::RcvCircleSignal()
 
 void MainWindow::RcvCircleSig()
 {
-    ui->te_time->setText("Круг " + QString::number(stopwatch->circle_num) + ", время: " + stopwatch->circle_time + " сек.");
+    ui->te_time->append("Круг " + QString::number(stopwatch->circle_num) + ", время: " + stopwatch->circle_time + " сек.");
 }
 

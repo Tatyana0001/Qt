@@ -11,7 +11,7 @@ class Stopwatch : public QObject
 public:
     explicit Stopwatch(QObject* parent = nullptr);
     QTimer *myTime = nullptr;
-    int circle_num = 0;
+    int circle_num = 1;
     QString circle_time;
     bool started = false;
     bool get_start();
@@ -29,13 +29,11 @@ private:
     int circle_m = 0;
 
 signals:
-void sig_SendStartSignal();
-void sig_SendClearSignal();
-void sig_SendCircleSignal();
+    void sig_SendClearSignal();
+    void sig_SendCircleSignal();
 public slots:
-QString TimeSlot();
+    QString TimeSlot();
 };
-
 
 
 #endif // STOPWATCH_H
