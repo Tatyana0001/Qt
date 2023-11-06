@@ -42,6 +42,7 @@
 
 include/divisible/*
 
+*.adc
 
 ## Local 
 
