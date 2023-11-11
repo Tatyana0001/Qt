@@ -17,9 +17,6 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete chart;
-    delete chartView;
-    delete ptrGraph;
 }
 
 
@@ -172,8 +169,9 @@ void MainWindow::DisplayResult(QVector<double> mins, QVector<double> maxs)
 }
 
 void MainWindow::ClearGraph(QChart *chart){
+    if(!chart->isEmpty()){
             ptrGraph->clear();
-            chart->removeSeries(ptrGraph);
+            chart->removeSeries(ptrGraph);}
 }
 
 
