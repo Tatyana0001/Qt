@@ -38,13 +38,12 @@ MainWindow::MainWindow(QWidget *parent)
     /*
      * Соединяем сигнал, который передает ответ от БД с методом, который отображает ответ в ПИ
      */
-     connect(dataBase, &DataBase::sig_SendDataFromDB, this, &MainWindow::ScreenDataFromDB);
-
+     connect(dataBase, qOverload<QSqlQueryModel*, int>(&DataBase::sig_SendDataFromDB), this, qOverload<QSqlQueryModel*, int>(&MainWindow::ScreenDataFromDB));
+     connect(dataBase, qOverload<QSqlTableModel*, int>(&DataBase::sig_SendDataFromDB), this, qOverload<QSqlTableModel*, int>(&MainWindow::ScreenDataFromDB));
     /*
      *  Сигнал для подключения к БД
      */
     connect(dataBase, &DataBase::sig_SendStatusConnection, this, &MainWindow::ReceiveStatusConnectionToDB);
-    connect(dataBase, &DataBase::sig_SendStatusRequest, this, &MainWindow::ReceiveStatusRequestToDB);
 }
 
 MainWindow::~MainWindow()
@@ -99,9 +98,6 @@ void MainWindow::on_act_connect_triggered()
  */
 void MainWindow::on_pb_request_clicked()
 {
-   // if(ui->cb_category){
-
-   // }
     switch(ui->cb_category->currentIndex()){
     case 0: {
         request = "SELECT title, description, c.name  FROM film f "
@@ -128,7 +124,7 @@ void MainWindow::on_pb_request_clicked()
     default:
         break;
     }
-    auto req = [&]{dataBase->RequestToDB(request);};
+    auto req = [&]{dataBase->RequestToDB(request, ui->tv_result, ui->cb_category->currentIndex());};
     QtConcurrent::run(req);
 }
 
@@ -137,36 +133,20 @@ void MainWindow::on_pb_request_clicked()
  * \param widget
  * \param typeRequest
  */
-void MainWindow::ScreenDataFromDB(const QTableWidget *widget, int typeRequest)
+
+void MainWindow::ScreenDataFromDB(QSqlTableModel *model, int typeRequest){
+    ui->tv_result->setModel(model);
+    for(int i = 3; i<model->columnCount(); ++i){
+       ui->tv_result->hideColumn(i);
+    }
+    ui->tv_result->showColumn(0);
+    ui->tv_result->setEditTriggers(QAbstractItemView::NoEditTriggers);
+}
+void MainWindow::ScreenDataFromDB(QSqlQueryModel *model, int typeRequest)
 {
-    switch (typeRequest) {
-
-        case 1:
-        case 2:
-        case 3:{
-
-            ui->tb_result->setRowCount(widget->rowCount( ));
-            ui->tb_result->setColumnCount(widget->columnCount( ));
-            QStringList hdrs;
-            for(int i = 0; i < widget->columnCount(); ++i){
-                hdrs << widget->horizontalHeaderItem(i)->text();
-            }
-            ui->tb_result->setHorizontalHeaderLabels(hdrs);
-
-            for(int i = 0; i<widget->rowCount(); ++i){
-                for(int j = 0; j<widget->columnCount(); ++j){
-                    ui->tb_result->setItem(i,j, widget->item(i,j)->clone());
-                }
-            }
-
-            ui->tb_result->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
-            break;
-
-        }
-        default:
-            break;
-        }
+    ui->tv_result->setModel(model);
+    ui->tv_result->showColumn(0);
+    ui->tv_result->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 /*!
  * \brief Метод изменяет стотояние формы в зависимости от статуса подключения к БД
@@ -190,19 +170,9 @@ void MainWindow::ReceiveStatusConnectionToDB(bool status)
     }
 
 }
-void MainWindow::ReceiveStatusRequestToDB(QSqlError err)
+
+void MainWindow::on_pb_clear_clicked()
 {
-
-    if(err.type() != QSqlError::NoError){
-        msg->setText(err.text());
-        msg->exec();
-    }
-    else{
-
-        dataBase->ReadAnswerFromDB(requestAllFilms);
-
-    }
-
+    ui->tv_result->setModel(0);
 }
-
 
