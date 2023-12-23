@@ -13,7 +13,6 @@ DataBase::~DataBase()
 {
     delete dataBase;
     delete query_model;
-    delete table_model;
 }
 
 /*!
@@ -45,6 +44,9 @@ void DataBase::ConnectToDataBase(QVector<QString> data)
 
     bool status;
     status = dataBase->open( );
+    if(status == true){
+        table_model = new QSqlTableModel(nullptr, *dataBase);
+    }
     emit sig_SendStatusConnection(status);
 
 }
@@ -54,7 +56,7 @@ void DataBase::ConnectToDataBase(QVector<QString> data)
  */
 void DataBase::DisconnectFromDataBase(QString nameDb)
 {
-
+    delete table_model;
     *dataBase = QSqlDatabase::database(nameDb);
     dataBase->close();
 
@@ -71,7 +73,6 @@ void DataBase::RequestToDB(QString request, QTableView *view, int requestType)
     }
     switch (requestType) {
     case 0:{
-        table_model = new QSqlTableModel(nullptr, *dataBase);
         table_model->setTable("film");
         table_model->select();
         table_model->setHeaderData(0, Qt::Horizontal, tr("Id фильма"));
