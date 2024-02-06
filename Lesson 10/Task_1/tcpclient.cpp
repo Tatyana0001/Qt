@@ -170,6 +170,10 @@ void TCPclient::ReadyReed()
 
 void TCPclient::ProcessingData(ServiceHeader header, QDataStream &stream)
 {
+    if(header.status != STATUS_SUCCES){
+        emit sig_Error(header.status);
+        return;
+    }
 
     switch (header.idData){
 
@@ -203,7 +207,6 @@ void TCPclient::ProcessingData(ServiceHeader header, QDataStream &stream)
     }
     default:
         return;
-
     }
 
 }

@@ -42,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(client, &TCPclient::sig_sendStat, this, &MainWindow::DisplayStat);
     connect(client, &TCPclient::sig_SendReplyForSetData, this, &MainWindow::SetDataReply);
     connect(client, &TCPclient::sig_ClearSpace, this, &MainWindow::DisplaySuccess);
+    connect(client, &TCPclient::sig_Error, this, &MainWindow::DisplayError);
 }
 
 MainWindow::~MainWindow()
@@ -62,7 +63,7 @@ void MainWindow::DisplayFreeSpace(uint32_t freeSpace)
 }
 void MainWindow::SetDataReply(QString replyString)
 {
-    ui->tb_result->append("Передана строка на сервер: " + ui->le_data->text());
+   ui->tb_result->append("Передана строка на сервер: " + replyString);//ui->le_data->text());
 }
 void MainWindow::DisplayStat(StatServer stat)
 {
@@ -185,7 +186,10 @@ void MainWindow::on_pb_request_clicked()
        //Отправить данные
    case 3:{
        header.idData = SET_DATA;
-       break;
+       QString data = ui->le_data->text();
+       header.len = data.size();
+       client->SendData(header, data);
+       return;
    }
        //Очистить память на сервере
    case 4:{
@@ -198,7 +202,7 @@ void MainWindow::on_pb_request_clicked()
 
    }
 
-   client->SendRequest(header);
+  client->SendRequest(header);
 
 }
 
